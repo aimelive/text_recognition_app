@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:text_recognition_app/constants/colors.dart';
 
 import 'screens/home.dart';
 
@@ -14,7 +15,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.indigo,
-        scaffoldBackgroundColor: Colors.grey.shade200,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: primary,
+            elevation: 0.0,
+            shadowColor: Colors.transparent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ),
+        scaffoldBackgroundColor: const Color(0xFFF2F2F3),
       ),
       home: const Home(),
     );
