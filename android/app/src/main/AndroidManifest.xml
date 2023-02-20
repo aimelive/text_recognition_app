@@ -2,7 +2,7 @@
     package="com.example.text_recognition_app">
     <uses-permission android:name="android.permission.CAMERA"/>
    <application
-        android:label="text_recognition_app"
+        android:label="Text Recognition"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

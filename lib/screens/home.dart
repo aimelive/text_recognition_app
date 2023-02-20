@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:text_recognition_app/constants/colors.dart';
+import 'package:text_recognition_app/screens/saved_text.dart';
 import 'package:text_recognition_app/services/scan_image.dart';
+import 'package:text_recognition_app/utils/helpers.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -62,7 +64,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     if (_cameraController != null) {
       _cameraSelected(_cameraController!.description);
     } else {
-      print("Camera not selected");
+      // print("Camera not selected");
     }
   }
 
@@ -143,24 +145,84 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
               body: _isPremissionGranted
                   ? Column(
                       children: [
+                        SafeArea(
+                          child: Container(
+                            margin: const EdgeInsets.all(10),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: CircleAvatar(
+                                backgroundColor: primary,
+                                child: IconButton(
+                                  onPressed: () => pushPage(
+                                    context,
+                                    page: const SavedText(),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.directions_outlined,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                         Expanded(
                           child: Container(),
                         ),
                         Container(
                           padding: const EdgeInsets.only(bottom: 30.0),
-                          child: Center(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (_cameraController == null) {
-                                  return;
-                                }
-                                scanService.scanImage(
-                                  cameraController: _cameraController!,
-                                  context: context,
-                                );
-                              },
-                              child: const Text("Scan Text"),
-                            ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(3.0),
+                                margin: const EdgeInsets.only(right: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  border: Border.all(
+                                    width: 2,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                child: const Icon(
+                                  Icons.more_horiz,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  if (_cameraController == null) {
+                                    return;
+                                  }
+                                  scanService.scanImage(
+                                    cameraController: _cameraController!,
+                                    context: context,
+                                    mounted: mounted,
+                                  );
+                                },
+                                child: const CircleAvatar(
+                                  backgroundColor: primary,
+                                  radius: 25,
+                                  foregroundColor: Colors.white,
+                                  child: Icon(Icons.camera_alt_outlined),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(3.0),
+                                margin: const EdgeInsets.only(left: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  border: Border.all(
+                                    width: 2,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                child: const Icon(
+                                  Icons.more_horiz,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
                           ),
                         )
                       ],
