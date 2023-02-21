@@ -13,6 +13,29 @@ Text recognition app in Flutter. Able to recognize text from camera/photo
 - Save and delete scanned text
 - Sharing scanned text to native platforms
 - App icon and splash screen
+## Run locally
+- Start by cloning this repo by running this command in your terminal
+```bash
+git clone https://github.com/aimelive/text_recognition_app
+```
+- Change directory to `text_recognition_app`
+```bash
+cd text_recognition_app
+```
+- Run this command to get all dependencies
+```bash
+flutter pub get
+```
+- Run this command to launch the application in selected device (Emulator/Simulator or Physical device)
+```bash
+flutter run
+```
+- Now you're to go to test the application once it is launched
+### Prerequisites
+Note that to run this application locally on your machine you need to have the following:
+- Flutter SDK
+- Android Studio or XCode
+- Emulator/Simulator or Physical Mobile Device
 ## Get APK
 Copy this URL
 ```bash
