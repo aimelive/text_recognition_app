@@ -26,7 +26,8 @@ cd text_recognition_app
 ```bash
 flutter pub get
 ```
-- Run this command to launch the application in selected device (Emulator/Simulator or Physical device)
+- Launch your emulator/simulator or physical device to be used
+- Run this command to launch the application in launched/selected device (Emulator/Simulator or Physical device)
 ```bash
 flutter run
 ```
