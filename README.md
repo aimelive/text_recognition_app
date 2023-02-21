@@ -12,10 +12,13 @@ Text recognition app in Flutter. Able to recognize text from camera/photo
 - Copying scanned text to clipboard 
 - Save and delete scanned text
 - Sharing scanned text to native platforms
+- App icon and splash screen
 ## Get APK
+Copy this URL
 ```bash
-My Google Drive link,.. coming soon,...
+https://drive.google.com/file/d/1cqYvwGoKT1_w95lXOGCo3PO4qDYkbls-/view
 ```
+Or click [here](https://drive.google.com/file/d/1cqYvwGoKT1_w95lXOGCo3PO4qDYkbls-/view?usp=sharing)
 ## Screenshots
 <p>
 <img src="./assets/screens/1.png" width="120"/>
