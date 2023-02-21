@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:text_recognition_app/constants/colors.dart';
-import 'package:text_recognition_app/screens/saved_text.dart';
+import 'package:text_recognition_app/screens/saved_texts_screen.dart';
 import 'package:text_recognition_app/services/scan_image.dart';
 import 'package:text_recognition_app/utils/helpers.dart';
 
@@ -155,7 +155,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                                 child: IconButton(
                                   onPressed: () => pushPage(
                                     context,
-                                    page: const SavedText(),
+                                    page: const SavedTextsScreen(),
                                   ),
                                   icon: const Icon(
                                     Icons.directions_outlined,
@@ -181,16 +181,16 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                                   borderRadius: BorderRadius.circular(25),
                                   border: Border.all(
                                     width: 2,
-                                    color: Colors.grey,
+                                    color: Colors.grey.shade200,
                                   ),
                                 ),
-                                child: const Icon(
+                                child: Icon(
                                   Icons.more_horiz,
-                                  color: Colors.grey,
+                                  color: Colors.grey.shade200,
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   if (_cameraController == null) {
                                     return;
                                   }
@@ -214,12 +214,12 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                                   borderRadius: BorderRadius.circular(25),
                                   border: Border.all(
                                     width: 2,
-                                    color: Colors.grey,
+                                    color: Colors.grey.shade200,
                                   ),
                                 ),
-                                child: const Icon(
+                                child: Icon(
                                   Icons.more_horiz,
-                                  color: Colors.grey,
+                                  color: Colors.grey.shade200,
                                 ),
                               ),
                             ],

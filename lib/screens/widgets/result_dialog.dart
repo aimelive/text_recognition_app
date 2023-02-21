@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:text_recognition_app/screens/saved_text.dart';
+import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:text_recognition_app/models/saved_text.dart';
+import 'package:text_recognition_app/screens/saved_texts_screen.dart';
+import 'package:text_recognition_app/services/hive_db.dart';
 import 'package:text_recognition_app/utils/helpers.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-Future<Object?> resultDialog(BuildContext context, {required String text}) {
+Future<Object?> resultDialog(
+  BuildContext context, {
+  required String text,
+  required Uint8List imageData,
+}) {
   return showGeneralDialog(
     context: context,
     barrierDismissible: true,
@@ -19,6 +28,8 @@ Future<Object?> resultDialog(BuildContext context, {required String text}) {
       );
     }),
     pageBuilder: ((context, animation, secondaryAnimation) {
+      final hive = HiveService();
+
       return Center(
         child: Container(
           height: 320,
@@ -67,11 +78,18 @@ Future<Object?> resultDialog(BuildContext context, {required String text}) {
                           ),
                           IconButton(
                             icon: const Icon(Icons.copy),
-                            onPressed: () {},
+                            onPressed: () => copyToClipboard(
+                              context,
+                              true,
+                              text: text,
+                            ),
                           ),
                           IconButton(
                             icon: const Icon(Icons.share),
-                            onPressed: () {},
+                            onPressed: () => Share.share(
+                              text,
+                              subject: "Shared from Text Recognition App",
+                            ),
                           ),
                         ],
                       ),
@@ -81,16 +99,34 @@ Future<Object?> resultDialog(BuildContext context, {required String text}) {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () async {
+                            if (!await launchUrl(Uri.parse(
+                                "https://translate.google.com/?text=$text"))) {
+                              showSnackbarMessage(
+                                context,
+                                "Could not launch Google Translate",
+                                false,
+                              );
+                            }
+                          },
                           icon: const Icon(Icons.translate),
                           label: const Text("Translate"),
                         ),
                         ElevatedButton.icon(
                           onPressed: () {
-                            pop(context);
+                            hive.addText(
+                              SavedText(
+                                createdAt: DateTime.now(),
+                                imgName: "vidcam.png",
+                                text: text,
+                                imageData: imageData,
+                                id: 1,
+                              ),
+                            );
+                            // pop(context);
                             pushPage(
                               context,
-                              page: const SavedText(),
+                              page: const SavedTextsScreen(),
                             );
                           },
                           icon: const Icon(Icons.save_as),

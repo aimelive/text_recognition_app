@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:text_recognition_app/models/saved_text.dart';
+import 'package:text_recognition_app/utils/helpers.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:url_launcher/url_launcher.dart';
 
 class TextTile extends StatefulWidget {
-  const TextTile({super.key, required this.text});
+  const TextTile({super.key, required this.text, required this.onDelete});
 
   final SavedText text;
+  final VoidCallback onDelete;
 
   @override
   State<TextTile> createState() => _TextTileState();
@@ -27,7 +31,12 @@ class _TextTileState extends State<TextTile> {
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.asset("assets/${widget.text.imgName}"),
+                child: Image.memory(
+                  widget.text.imageData,
+                  fit: BoxFit.cover,
+                  width: 50,
+                ),
+                // child: Image.asset("assets/${widget.text.imgName}"),
               ),
             ),
             title: Text(widget.text.text),
@@ -36,7 +45,7 @@ class _TextTileState extends State<TextTile> {
                 _showActions = !_showActions;
               });
             },
-            subtitle: const Text("Created a few months ago"),
+            subtitle: Text("Created ${timeago.format(widget.text.createdAt)}"),
             // trailing: const Icon(Icons.delete_outline),
           ),
           if (_showActions)
@@ -46,7 +55,18 @@ class _TextTileState extends State<TextTile> {
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxHeight: 30),
                   child: TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (!await launchUrl(
+                        Uri.parse(
+                            "https://translate.google.com/?text=${widget.text.text}"),
+                      )) {
+                        showSnackbarMessage(
+                          context,
+                          "Could not launch Google Translate",
+                          false,
+                        );
+                      }
+                    },
                     icon: const Icon(
                       Icons.translate,
                       size: 16,
@@ -64,7 +84,11 @@ class _TextTileState extends State<TextTile> {
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxHeight: 30),
                   child: TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () => copyToClipboard(
+                      context,
+                      mounted,
+                      text: widget.text.text,
+                    ),
                     icon: const Icon(
                       Icons.copy,
                       size: 16,
@@ -82,7 +106,7 @@ class _TextTileState extends State<TextTile> {
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxHeight: 30),
                   child: TextButton.icon(
-                    onPressed: () {},
+                    onPressed: widget.onDelete,
                     icon: const Icon(
                       Icons.delete,
                       size: 16,

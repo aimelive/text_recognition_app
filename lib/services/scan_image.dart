@@ -4,7 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
-import '../screens/result_dialog.dart';
+import '../screens/widgets/result_dialog.dart';
 import '../utils/helpers.dart';
 
 class ScanImageService {
@@ -26,13 +26,19 @@ class ScanImageService {
       if (recognizedText.text.isEmpty) {
         throw Exception("No text recognized");
       }
+      final bytes = await pictureFile.readAsBytes();
       if (!mounted) return;
       await resultDialog(
         context,
+        imageData: bytes,
         text: recognizedText.text,
       );
     } catch (e) {
-      showError(context, e.toString());
+      showSnackbarMessage(
+        context,
+        "Something went wrong, ${e.toString()}",
+        false,
+      );
     }
   }
 }

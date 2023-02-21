@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// Navigator push to another page specified
 pushPage(BuildContext context, {required Widget page}) => Navigator.push(
@@ -9,8 +10,8 @@ pushPage(BuildContext context, {required Widget page}) => Navigator.push(
     );
 
 /// Scaffold messenger show error snackbar
-ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showError(
-    BuildContext context, String error) {
+ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackbarMessage(
+    BuildContext context, String message, bool success) {
   return ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       elevation: 0.0,
@@ -20,11 +21,11 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showError(
       content: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.red.shade300,
+          color: success ? Colors.green.shade400 : Colors.red.shade300,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
-          "Something went wrong $error",
+          message,
           textAlign: TextAlign.center,
         ),
       ),
@@ -34,3 +35,19 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showError(
 
 /// Popping the page
 pop(BuildContext context) => Navigator.pop(context);
+
+//Copying to clipboard
+Future<void> copyToClipboard(BuildContext context, bool mounted,
+    {required String text}) async {
+  await Clipboard.setData(
+    ClipboardData(
+      text: text,
+    ),
+  );
+  if (!mounted) return;
+  showSnackbarMessage(
+    context,
+    "Text copied to clip board",
+    true,
+  );
+}
