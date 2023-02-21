@@ -31,6 +31,7 @@ flutter pub get
 ```bash
 flutter run
 ```
+Alternatively, you can launch the project in your favorite code editor which support flutter and launch from there by pressing `F5` key
 - Now you're to go to test the application once it is launched
 ### Prerequisites
 Note that to run this application locally on your machine you need to have the following:
