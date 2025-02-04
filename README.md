@@ -60,4 +60,6 @@ Or click [here](https://drive.google.com/file/d/1cqYvwGoKT1_w95lXOGCo3PO4qDYkbls
 - iOS ✅
 ### Author
 - [Aimelive](https://github.com/aimelive)
+### Version
+- Flutter version 10.0
 
